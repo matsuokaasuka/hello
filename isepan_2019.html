@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
+<title>ISEPAN! 2019 — matsuoka asuka</title>
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'gsk3byw',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+<script>
+  var picked = 'redaction-35';
+  document.documentElement.style.setProperty('--latin-font', '"' + picked + '"');
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* フォント読み込み完了まで非表示 → フェードイン */
+  .wf-loading main, .wf-loading .picker { opacity: 0; }
+  .wf-active main, .wf-active .picker,
+  .wf-inactive main, .wf-inactive .picker { opacity: 1; transition: opacity 0.3s ease; }
+
+  html, body {
+    background: #fff;
+  }
+
+  html {
+    overflow-y: scroll;
+    scrollbar-color: #bbb #ddd;
+  }
+
+  ::-webkit-scrollbar { width: 14px; height: 14px; background: #ddd; }
+  ::-webkit-scrollbar-track { background: #ddd; }
+  ::-webkit-scrollbar-thumb { background: #bbb; }
+  ::-webkit-scrollbar-corner { background: #ddd; }
+
+  ::selection {
+    background: var(--sel, #beb19d);
+    color: var(--fg, #000);
+  }
+
+  body {
+    font-family: var(--latin-font, "redaction"), "dnp-shuei-gothic-gin-std", "Noto Sans JP", "Yu Gothic Medium", "游ゴシック Medium", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-feature-settings: "palt" 1;
+    font-size: 16px;
+    color: var(--fg, #000);
+    min-height: 100vh;
+  }
+
+  /* ---- 右上ウィジェット(トップと共通) ---- */
+  .picker {
+    position: fixed;
+    top: 37px;
+    right: 33px;
+    width: 260px;
+    z-index: 100;
+  }
+
+  .spectrum {
+    position: relative;
+    width: 260px;
+    height: 32px;
+    cursor: crosshair;
+    background: linear-gradient(90deg,
+      #e93325 0%, #f0e43c 14%, #59e13c 28%, #8ff5d2 41%,
+      #86b2f8 52%, #1e14ec 65%, #8d1cf0 76%, #f22be2 88%, #e5384d 100%);
+  }
+
+  .spectrum::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      rgba(255,255,255,0.85) 0%,
+      rgba(255,255,255,0) 45%,
+      rgba(0,0,0,0) 55%,
+      rgba(0,0,0,0.75) 100%);
+    pointer-events: none;
+  }
+
+  .knob {
+    position: absolute;
+    z-index: 1;
+    left: 2px;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #e93325;
+    border: 2.5px solid #3c3c3c;
+    box-shadow: 0 0 0 1.5px #fff inset;
+    pointer-events: none;
+  }
+
+  .copybar {
+    display: flex;
+    margin-top: 7px;
+    height: 32px;
+    width: 260px;
+    font-family: "redaction-35", "dnp-shuei-gothic-gin-std", "Noto Sans JP", sans-serif;
+  }
+
+  .copybar .email {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: none;
+    color: #000;
+    padding: 0 4px 0 10px;
+    font-size: 14px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    font-feature-settings: normal;
+  }
+
+  .copybar .email .jagged,
+  .copybar button .jagged {
+    filter: url(#distortion-light);
+  }
+
+  .copybar button {
+    flex: 0 0 auto;
+    width: 50px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1;
+    background: linear-gradient(#f6f6f6, #dddddd);
+    border: none;
+    cursor: pointer;
+    color: #000;
+    padding: 0;
+  }
+
+  .copybar button:active {
+    background: linear-gradient(#d5d5d5, #e8e8e8);
+  }
+
+  .worksbar {
+    margin-top: 7px;
+    font-family: "redaction-35", "dnp-shuei-gothic-gin-std", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    width: 260px;
+  }
+
+  .worksbar > button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: none;
+    color: #000;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0 10px;
+    line-height: 1;
+    width: 100%;
+    height: 32px;
+  }
+
+  .worksbar > button .jagged {
+    filter: url(#distortion-light);
+    text-decoration: underline;
+  }
+
+  .worksbar > button .works-icon {
+    filter: url(#distortion-light);
+  }
+
+  .works-tree[hidden] {
+    display: none !important;
+  }
+
+  .works-tree {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 10px 16px 20px;
+    gap: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #999 #fff;
+    background: #fff;
+    margin-top: 0;
+  }
+
+  .works-tree::-webkit-scrollbar { width: 6px; }
+  .works-tree::-webkit-scrollbar-thumb { background: #999; }
+  .works-tree::-webkit-scrollbar-track { background: #fff; }
+
+  .works-tree a {
+    color: #0000EE;
+    text-decoration: underline;
+    padding: 5px 0;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    filter: url(#distortion-light);
+  }
+
+  .works-tree a::before {
+    content: '📁 ';
+    text-decoration: none;
+  }
+
+  .works-tree a:hover::before {
+    content: '📂 ';
+  }
+
+  .works-tree a:visited {
+    color: #551A8B;
+  }
+
+  .works-tree a:hover {
+    text-decoration: none;
+  }
+
+  /* ---- メインコンテンツ ---- */
+  .work-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 58px 60px;
+  }
+
+  /* ---- 作品タイトル ---- */
+  .work-title {
+    filter: url(#distortion-light);
+    margin-bottom: 48px;
+    padding-top: 20px;
+  }
+
+  .work-title h1 {
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    line-height: 1.4;
+  }
+
+  .work-title .year {
+    font-size: 15px;
+    margin-top: 8px;
+    opacity: 0.6;
+    letter-spacing: 1px;
+  }
+
+  /* ---- 画像ギャラリー ---- */
+  .work-images {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .work-images img,
+  .work-images video {
+    width: 100%;
+    display: block;
+  }
+
+  /* レイアウトモジュール */
+  .work-images .img-box { width: 100%; }
+  .work-images .img-box-30 { width: 30%; margin: 0 auto; }
+
+  .work-images .flex-container-2col {
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .work-images .flex-container-2col > * { width: 49%; }
+
+  .work-images .flex-container-3col {
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .work-images .flex-container-3col > * { width: 32%; }
+
+  .work-images .flex-container-4col {
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .work-images .flex-container-4col > * { width: 24%; }
+
+  .work-images .video-box-tate { width: 30%; margin: 0 auto; }
+  .work-images .video-box-yoko { width: 70%; margin: 0 auto; }
+
+  .work-images .flex-container-2col img,
+  .work-images .flex-container-3col img,
+  .work-images .flex-container-3col video,
+  .work-images .flex-container-4col img { width: 100%; }
+
+  /* ---- 説明文 ---- */
+  .work-description {
+    margin-top: 56px;
+    filter: url(#distortion-light);
+    max-width: 720px;
+  }
+
+  .work-description p {
+    font-size: 17px;
+    line-height: 2;
+    text-align: justify;
+    letter-spacing: 0.3px;
+  }
+
+  .work-description .visit {
+    display: inline-block;
+    margin-top: 24px;
+    color: var(--fg, #000);
+    text-decoration: underline;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .work-description .visit:hover {
+    opacity: 0.6;
+  }
+
+  /* ---- クレジット ---- */
+  .work-credits {
+    margin-top: 48px;
+    filter: url(#distortion-light);
+    font-size: 13px;
+    line-height: 2.2;
+    letter-spacing: 0.3px;
+    opacity: 0.7;
+    max-width: 720px;
+  }
+
+  .work-credits span {
+    white-space: nowrap;
+  }
+
+  /* ---- フッター ---- */
+  .work-footer {
+    margin-top: 80px;
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    filter: url(#distortion-light);
+    font-size: 13px;
+    border-top: 1px solid var(--fg, #000);
+
+  }
+
+  .work-footer a {
+    color: var(--fg, #000);
+    text-decoration: underline;
+  }
+
+  .work-footer a:hover {
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <filter id="distortion">
+      <feTurbulence baseFrequency="1 1" numOctaves="1" />
+      <feDisplacementMap in="SourceGraphic" scale="1.7" />
+    </filter>
+    <filter id="distortion-light">
+      <feTurbulence baseFrequency="0.8 0.8" numOctaves="1" />
+      <feDisplacementMap in="SourceGraphic" scale="1.2" />
+    </filter>
+  </defs>
+</svg>
+
+<!-- 右上ウィジェット(トップと共通) -->
+<div class="picker">
+  <div class="spectrum" id="spectrum">
+    <div class="knob" id="knob"></div>
+  </div>
+  <div class="copybar">
+    <span class="email" id="email"><span class="jagged" id="emailIcon">✉️</span>&ensp;<span class="jagged" id="emailText">matsuokaasuka@gmail.com</span></span>
+    <button type="button" id="copyBtn" aria-label="メールアドレスをコピー"><span class="jagged">Copy</span></button>
+  </div>
+  <div class="worksbar">
+    <button type="button" id="worksToggle" aria-expanded="false">
+      <span class="works-icon">📁</span> <span class="jagged">WORKS</span>
+    </button>
+    <div class="works-tree" id="worksTree" hidden>
+      <a href="mido.html">味道 -MIDO-</a>
+      <a href="cpl.html">CRAZY PIZZA:LIFE</a>
+      <a href="ffa.html">冷凍餃子フライパンチャレンジ</a>
+      <a href="sugyoibaito.html">すギョいバイト</a>
+      <a href="sh.html">SAKISAKA HOSPITAL</a>
+      <a href="hugtics.html">Hugtics</a>
+      <a href="honyoubi.html">#木曜日は本曜日</a>
+      <a href="fsb.html">FIRST SHAVE BOOK</a>
+      <a href="fanclove.html">Fanclove</a>
+      <a href="isepan_2021.html">ISEPAN! 2021</a>
+      <a href="astigu.html">ASTIGU</a>
+      <a href="table.html">Table 2019 Autumn</a>
+      <a href="harudane.html">銀座三越 春装飾</a>
+      <a href="wacoal.html">Wacoal PARFAGE</a>
+      <a href="hm.html">ほっともっと HAPPY HOUR</a>
+      <a href="yayoiken.html">やよい軒</a>
+      <a href="irodorisai.html">三越伊勢丹 彩り祭</a>
+      <a href="kose.html">KOSE Winter Massage</a>
+      <a href="xmas_2020.html">三越伊勢丹クリスマス2020</a>
+      <a href="tcs.html">TOKYO CREATIVE SALON 2020</a>
+      <a href="xmas_2019.html">三越伊勢丹クリスマス2019</a>
+      <a href="isepan_2019.html">ISEPAN! 2019</a>
+      <a href="pfq.html">QUADRA CI</a>
+      <a href="wwf.html">WWF #ANIMAL_SELFIE</a>
+    </div>
+  </div>
+</div>
+
+<!-- メイン -->
+<main class="work-content">
+
+  <div class="work-title">
+    <h1>ISEPAN! 2019</h1>
+    <div class="year">2019</div>
+  </div>
+
+  <div class="work-images">
+    <img src="assets/img/work/isepan/isepan_2019_02.gif" alt="ISEPAN! 2019 01" loading="lazy">
+    <img src="assets/img/work/isepan/isepan_2019_01.gif" alt="ISEPAN! 2019 02" loading="lazy">
+    <img src="assets/img/work/isepan/isepan_2019_03.gif" alt="ISEPAN! 2019 03" loading="lazy">
+  </div>
+
+  <div class="work-description">
+    <p>伊勢丹新宿で行われるパンの祭典「ISEPAN!」のビジュアル、Web制作を行いました。楽しげな雰囲気が伝わるようにGIFアニメで告知用ビジュアルを作成しSNSでの認知・拡散を狙いました。前年度比120%の集客で大盛況のイベントとなりました。</p>
+  </div>
+
+  <div class="work-credits">
+    <span>Cl : Isetan Mitsukoshi Holdings Ltd.</span>
+    <span>CD : Yanai Sato</span>
+    <span>D : Matsuoka Asuka</span>
+    <span>C : Hane Maiko</span>
+    <span>Pr : Watanabe Ryobu</span>
+  </div>
+
+  <footer class="work-footer">
+    <a href="asuka_2.html">👈 TOP</a>
+    <span>©ま⊃ぉｶゝぁすｶゝ</span>
+  </footer>
+
+</main>
+
+<script>
+/* ---- カラーピッカー ---- */
+const spectrum = document.getElementById('spectrum');
+const knob = document.getElementById('knob');
+
+function hslFromPosition(x, y, rect) {
+  const hue = (x / rect.width) * 360;
+  const ratio = y / rect.height;
+  const lightness = 100 - ratio * 100;
+  return { h: hue, s: 70, l: Math.max(10, Math.min(95, lightness)) };
+}
+
+function applyColor(h, s, l) {
+  const bg = `hsl(${h}, ${s}%, ${l}%)`;
+  const fg = l > 55 ? `hsl(${h}, ${Math.min(s+20,100)}%, 8%)` : `hsl(${h}, ${Math.min(s+10,100)}%, 96%)`;
+  const sel = `hsl(${(h+180)%360}, ${s}%, ${Math.max(30,Math.min(70,l))}%)`;
+  const sbThumb = `hsl(${h}, ${Math.max(s-15,0)}%, ${Math.max(l-15,5)}%)`;
+  const sbTrack = `hsl(${h}, ${Math.max(s-10,0)}%, ${Math.max(l-8,5)}%)`;
+
+  const root = document.documentElement;
+  root.style.setProperty('--fg', fg);
+  root.style.setProperty('--sel', sel);
+
+  knob.style.background = bg;
+  document.body.style.background = bg;
+}
+
+function handlePointer(e) {
+  const rect = spectrum.getBoundingClientRect();
+  const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+  const y = Math.max(0, Math.min(e.clientY - rect.top, rect.height));
+  knob.style.left = x + 'px';
+  knob.style.top = y + 'px';
+  knob.style.transform = 'translate(-50%, -50%)';
+  const { h, s, l } = hslFromPosition(x, y, rect);
+  applyColor(h, s, l);
+}
+
+let dragging = false;
+spectrum.addEventListener('pointerdown', (e) => {
+  dragging = true;
+  spectrum.setPointerCapture(e.pointerId);
+  handlePointer(e);
+});
+spectrum.addEventListener('pointermove', (e) => { if (dragging) handlePointer(e); });
+spectrum.addEventListener('pointerup', () => { dragging = false; });
+
+/* ---- メールコピー ---- */
+const emailEl = document.getElementById('email');
+const emailIconEl = document.getElementById('emailIcon');
+const emailTextEl = document.getElementById('emailText');
+const copyBtnEl = document.getElementById('copyBtn');
+const EMAIL_TEXT = 'matsuokaasuka@gmail.com';
+const THANKS_TEXT = 'ご連絡お待ちしています ⊹ ₊ ˚ *';
+const CHECK_SVG = '<span class="jagged"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter" style="vertical-align: middle;"><path d="M20 6 9 17l-5-5"/></svg></span>';
+let thanksTimer = null;
+
+copyBtnEl.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(EMAIL_TEXT);
+    copyBtnEl.innerHTML = CHECK_SVG;
+    copyBtnEl.classList.add('copied');
+    emailIconEl.textContent = '💌';
+    emailTextEl.textContent = THANKS_TEXT;
+    clearTimeout(thanksTimer);
+    thanksTimer = setTimeout(() => {
+      copyBtnEl.innerHTML = '<span class="jagged">Copy</span>';
+      copyBtnEl.classList.remove('copied');
+      emailTextEl.textContent = EMAIL_TEXT;
+    }, 3000);
+  } catch (e) {
+    window.prompt('コピーしてください:', EMAIL_TEXT);
+  }
+});
+
+/* ---- Works ツリー開閉 ---- */
+const worksToggle = document.getElementById('worksToggle');
+const worksTree = document.getElementById('worksTree');
+const worksIcon = worksToggle.querySelector('.works-icon');
+worksToggle.addEventListener('click', () => {
+  const open = worksToggle.getAttribute('aria-expanded') === 'true';
+  worksToggle.setAttribute('aria-expanded', !open);
+  worksTree.hidden = open;
+  worksIcon.textContent = open ? '📁' : '📂';
+});
+</script>
+</body>
+</html>
