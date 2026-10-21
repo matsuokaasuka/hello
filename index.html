@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
 <title>matsuoka asuka — designer &amp; art director</title>
 <script>
   (function(d) {
@@ -30,12 +32,18 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  /* フォント読み込み完了まで非表示 → フェードイン */
+  .wf-loading main, .wf-loading .picker { opacity: 0; }
+  .wf-active main, .wf-active .picker,
+  .wf-inactive main, .wf-inactive .picker { opacity: 1; transition: opacity 0.3s ease; }
+
   html, body {
     background: var(--bg, #9daabe);
   }
 
   /* スクロールバーも背景色に追従 */
   html {
+    overflow-y: scroll;
     scrollbar-color: var(--sb-thumb, #6e7785) var(--sb-track, #8a96a7);
   }
 
@@ -111,6 +119,15 @@
     /* 欧文は両端揃えにしない(単語間が不自然に空くため) */
   }
 
+  .block a {
+    color: var(--fg, #000);
+    text-decoration: underline;
+  }
+
+  .block a:hover {
+    text-decoration: none;
+  }
+
   /* ---- 放置/タブ離脱で文字がくつろぐ ---- */
   .w {
     white-space: nowrap; /* 欧文の単語・禁則グループは途中で改行させない */
@@ -137,14 +154,14 @@
     position: fixed;
     top: 37px;
     right: 33px;
-    width: 230px;
+    width: 260px;
     z-index: 10;
   }
 
   .spectrum {
     position: relative;
-    width: 230px;
-    height: 28px;
+    width: 260px;
+    height: 32px;
     cursor: crosshair;
     background: linear-gradient(90deg,
       #e93325 0%,
@@ -188,11 +205,10 @@
 
   .copybar {
     display: flex;
-    margin-top: 11px;
-    height: 28px;  /* カラーバーと同じ高さ(上端位置は変えず下に伸ばす) */
-    width: 230px;  /* カラーバーと同じ幅に揃える */
-    /* メールアドレスはドット欧文だと読めないので秀英角ゴシック銀で */
-    font-family: "dnp-shuei-gothic-gin-std", "Noto Sans JP", sans-serif;
+    margin-top: 7px;
+    height: 32px;
+    width: 260px;  /* カラーバーと同じ幅に揃える */
+    font-family: "redaction-35", "dnp-shuei-gothic-gin-std", "Noto Sans JP", sans-serif;
   }
 
   .copybar .email {
@@ -201,20 +217,25 @@
     align-items: center;
     background: #fff;
     border: none;
-    color: #000; /* 背景連動の文字色に影響されず常に黒 */
-    padding: 0 4px;
-    font-size: 12px;
+    color: #000;
+    padding: 0 4px 0 10px;
+    font-size: 14px;
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
     font-feature-settings: normal;
   }
 
+  .copybar .email .jagged,
+  .copybar button .jagged {
+    filter: url(#distortion-light);
+  }
+
   .copybar button {
     flex: 0 0 auto;
-    width: 44px;
+    width: 50px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1;
     background: linear-gradient(#f6f6f6, #dddddd);
     border: none;
@@ -225,6 +246,98 @@
 
   .copybar button:active {
     background: linear-gradient(#d5d5d5, #e8e8e8);
+  }
+
+  /* ---- Works ツリー ---- */
+  .worksbar {
+    margin-top: 7px;
+    font-family: "redaction-35", "dnp-shuei-gothic-gin-std", "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    width: 260px;
+  }
+
+  .worksbar > button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: none;
+    color: #000;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    padding: 0 10px;
+    line-height: 1;
+    width: 100%;
+    height: 32px;
+  }
+
+  .worksbar > button .jagged {
+    filter: url(#distortion-light);
+    text-decoration: underline;
+  }
+
+  .worksbar > button .works-icon {
+    filter: url(#distortion-light);
+  }
+
+  .works-tree[hidden] {
+    display: none !important;
+  }
+
+  .works-tree {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 10px 16px 20px;
+    gap: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #999 #fff;
+    background: #fff;
+    border-radius: 0;
+    margin-top: 0;
+  }
+
+  .works-tree::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .works-tree::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 0;
+  }
+
+  .works-tree::-webkit-scrollbar-track {
+    background: #fff;
+  }
+
+  .works-tree a {
+    color: #0000EE;
+    text-decoration: underline;
+    padding: 5px 0;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    filter: url(#distortion-light);
+  }
+
+  .works-tree a::before {
+    content: '📁 ';
+    text-decoration: none;
+  }
+
+  .works-tree a:hover::before {
+    content: '📂 ';
+  }
+
+  .works-tree a:visited {
+    color: #551A8B;
+  }
+
+  .works-tree a:hover {
+    text-decoration: none;
   }
 
   /* コピー完了: 黒背景+COPIED! */
@@ -260,6 +373,10 @@
       <feTurbulence baseFrequency="1 1" numOctaves="1" />
       <feDisplacementMap in="SourceGraphic" scale="1.7" />
     </filter>
+    <filter id="distortion-light">
+      <feTurbulence baseFrequency="0.8 0.8" numOctaves="1" />
+      <feDisplacementMap in="SourceGraphic" scale="1.2" />
+    </filter>
   </defs>
 </svg>
 
@@ -268,8 +385,39 @@
     <div class="knob" id="knob"></div>
   </div>
   <div class="copybar">
-    <span class="email" id="email">matsuokaasuka@gmail.com</span>
-    <button type="button" id="copyBtn" aria-label="メールアドレスをコピー">Copy</button>
+    <span class="email" id="email"><span class="jagged" id="emailIcon">✉️</span>&ensp;<span class="jagged" id="emailText">matsuokaasuka@gmail.com</span></span>
+    <button type="button" id="copyBtn" aria-label="メールアドレスをコピー"><span class="jagged">Copy</span></button>
+  </div>
+  <div class="worksbar">
+    <button type="button" id="worksToggle" aria-expanded="false">
+      <span class="works-icon">📁</span> <span class="jagged">WORKS</span>
+    </button>
+    <div class="works-tree" id="worksTree" hidden>
+      <a href="mido.html">味道 -MIDO-</a>
+      <a href="cpl.html">CRAZY PIZZA:LIFE</a>
+      <a href="ffa.html">冷凍餃子フライパンチャレンジ</a>
+      <a href="sugyoibaito.html">すギョいバイト</a>
+      <a href="sh.html">SAKISAKA HOSPITAL</a>
+      <a href="hugtics.html">Hugtics</a>
+      <a href="honyoubi.html">#木曜日は本曜日</a>
+      <a href="fsb.html">FIRST SHAVE BOOK</a>
+      <a href="fanclove.html">Fanclove</a>
+      <a href="isepan_2021.html">ISEPAN! 2021</a>
+      <a href="astigu.html">ASTIGU</a>
+      <a href="table.html">Table 2019 Autumn</a>
+      <a href="harudane.html">銀座三越 春装飾</a>
+      <a href="wacoal.html">Wacoal PARFAGE</a>
+      <a href="hm.html">ほっともっと HAPPY HOUR</a>
+      <a href="yayoiken.html">やよい軒</a>
+      <a href="irodorisai.html">三越伊勢丹 彩り祭</a>
+      <a href="kose.html">KOSE Winter Massage</a>
+      <a href="xmas_2020.html">三越伊勢丹クリスマス2020</a>
+      <a href="tcs.html">TOKYO CREATIVE SALON 2020</a>
+      <a href="xmas_2019.html">三越伊勢丹クリスマス2019</a>
+      <a href="isepan_2019.html">ISEPAN! 2019</a>
+      <a href="pfq.html">QUADRA CI</a>
+      <a href="wwf.html">WWF #ANIMAL_SELFIE</a>
+    </div>
   </div>
 </div>
 
@@ -298,59 +446,68 @@
   }
 
   // 1文字ずつspanに分解し、くつろぎ先(ずれ・回転・遅延)をランダムに仕込む
+  function makeCh(ch) {
+    const s = document.createElement('span');
+    s.className = 'ch';
+    s.textContent = ch;
+    const turns = [90, 180, -90];
+    s.style.setProperty('--rot', turns[Math.floor(Math.random() * turns.length)] + 'deg');
+    s.style.setProperty('--td', (Math.random() * 1.2).toFixed(2) + 's');
+    s.style.setProperty('--tdur', (0.7 + Math.random() * 1.0).toFixed(2) + 's');
+    return s;
+  }
+
+  function wrapTextFragment(text) {
+    const frag = document.createDocumentFragment();
+    text.split(/(\s+)/).forEach((tok) => {
+      if (!tok) return;
+      if (/^\s+$/.test(tok)) {
+        frag.appendChild(document.createTextNode(tok));
+        return;
+      }
+      const isCJK = /[　-ヿ一-鿿＀-￯]/.test(tok);
+      if (!isCJK) {
+        const w = document.createElement('span');
+        w.className = 'w';
+        for (const ch of tok) w.appendChild(makeCh(ch));
+        frag.appendChild(w);
+      } else {
+        const KINSOKU = '、。，．・：；！？」』）〉》〕ー々ぁぃぅぇぉっゃゅょァィゥェォッャュョ';
+        const chars = Array.from(tok);
+        let i = 0;
+        while (i < chars.length) {
+          const group = [chars[i]];
+          i++;
+          while (i < chars.length && KINSOKU.includes(chars[i])) {
+            group.push(chars[i]);
+            i++;
+          }
+          if (group.length === 1) {
+            frag.appendChild(makeCh(group[0]));
+          } else {
+            const w = document.createElement('span');
+            w.className = 'w';
+            for (const ch of group) w.appendChild(makeCh(ch));
+            frag.appendChild(w);
+          }
+        }
+      }
+    });
+    return frag;
+  }
+
   function wrapChars(root) {
     root.querySelectorAll('p').forEach((p) => {
-      const text = p.textContent;
-      p.textContent = '';
+      const children = Array.from(p.childNodes);
+      p.innerHTML = '';
       const frag = document.createDocumentFragment();
-      text.split(/(\s+)/).forEach((tok) => {
-        if (!tok) return;
-        if (/^\s+$/.test(tok)) {
-          frag.appendChild(document.createTextNode(tok));
-          return;
-        }
-        // 和文は1文字ごとに改行可、欧文は単語単位でまとめる
-        const isCJK = /[　-ヿ一-鿿＀-￯]/.test(tok);
-
-        function makeCh(ch) {
-          const s = document.createElement('span');
-          s.className = 'ch';
-          s.textContent = ch;
-          // 向きは90°単位のみ(右倒し・逆さま・左倒し)
-          const turns = [90, 180, -90];
-          s.style.setProperty('--rot', turns[Math.floor(Math.random() * turns.length)] + 'deg');
-          // コピー時の明滅用(文字ごとに時差と速さをランダムに)
-          s.style.setProperty('--td', (Math.random() * 1.2).toFixed(2) + 's');
-          s.style.setProperty('--tdur', (0.7 + Math.random() * 1.0).toFixed(2) + 's');
-          return s;
-        }
-
-        if (!isCJK) {
-          const w = document.createElement('span');
-          w.className = 'w';
-          for (const ch of tok) w.appendChild(makeCh(ch));
-          frag.appendChild(w);
-        } else {
-          // 禁則処理: 句読点等は直前の文字とセットにして行頭に落ちないようにする
-          const KINSOKU = '、。，．・：；！？」』）〉》〕ー々ぁぃぅぇぉっゃゅょァィゥェォッャュョ';
-          const chars = Array.from(tok);
-          let i = 0;
-          while (i < chars.length) {
-            const group = [chars[i]];
-            i++;
-            while (i < chars.length && KINSOKU.includes(chars[i])) {
-              group.push(chars[i]);
-              i++;
-            }
-            if (group.length === 1) {
-              frag.appendChild(makeCh(group[0]));
-            } else {
-              const w = document.createElement('span');
-              w.className = 'w';
-              for (const ch of group) w.appendChild(makeCh(ch));
-              frag.appendChild(w);
-            }
-          }
+      children.forEach(function(child) {
+        if (child.nodeType === Node.TEXT_NODE) {
+          frag.appendChild(wrapTextFragment(child.textContent));
+        } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName === 'A') {
+          const a = child.cloneNode(false);
+          a.appendChild(wrapTextFragment(child.textContent));
+          frag.appendChild(a);
         }
       });
       p.appendChild(frag);
@@ -401,41 +558,32 @@
   }, { rootMargin: '600px' });
   observer.observe(sentinel);
 
-  /* ---- スクロールで文字が広がる ----
-     画面下部にあるブロックほど字間・語間が広がり、
-     上に流れていくにつれて通常の組みに締まっていく */
-  const MAX_WORD_SPACING = 5.0;    // 画面最下部での語間(em)
-  const MAX_LETTER_SPACING = 1.4;  // 画面最下部での字間(em)
+  /* ---- スクロール中だけ欧文フォントがガチャガチャ入れ替わる ----
+     止まったらその時点のRedactionでキープ、また動かすとまた変わる */
+  const REDACTION_ALL = [
+    'redaction',
+    'redaction-10',
+    'redaction-20',
+    'redaction-35',
+    'redaction-50',
+    'redaction-70',
+    'redaction-100'
+  ];
+  const SWAP_INTERVAL = 120; // 入れ替えの最短間隔(ms)
+  let currentRedaction = '';
+  let lastSwap = 0;
 
-  let spreadQueued = false;
-
-  function updateSpread() {
-    spreadQueued = false;
-    const vh = window.innerHeight;
-    const blocks = grid.children;
-    for (let i = 0; i < blocks.length; i++) {
-      const b = blocks[i];
-      const r = b.getBoundingClientRect();
-      // 画面から大きく外れたものは触らない
-      if (r.bottom < -vh || r.top > vh * 2) continue;
-      // ブロック中心の画面内位置: 0(上端)→1(下端)
-      const t = Math.min(1, Math.max(0, (r.top + r.height / 2) / vh));
-      const e = t * t * t; // 下に行くほど加速度的に広がる
-      b.style.wordSpacing = (e * MAX_WORD_SPACING) + 'em';
-      b.style.letterSpacing = (e * MAX_LETTER_SPACING) + 'em';
-    }
-  }
-
-  function queueSpread() {
-    if (!spreadQueued) {
-      spreadQueued = true;
-      requestAnimationFrame(updateSpread);
-    }
-  }
-
-  window.addEventListener('scroll', queueSpread, { passive: true });
-  window.addEventListener('resize', queueSpread);
-  updateSpread();
+  window.addEventListener('scroll', () => {
+    const now = performance.now();
+    if (now - lastSwap < SWAP_INTERVAL) return;
+    lastSwap = now;
+    let next;
+    do {
+      next = REDACTION_ALL[Math.floor(Math.random() * REDACTION_ALL.length)];
+    } while (next === currentRedaction);
+    currentRedaction = next;
+    document.documentElement.style.setProperty('--latin-font', `"${next}"`);
+  }, { passive: true });
 
   /* ---- spectrum → background color ---- */
   const spectrum = document.getElementById('spectrum');
@@ -553,7 +701,7 @@
     let cr = contrastRatio(fg, base);
     if (cr < MIN_CONTRAST) {
       // 明度を段階的に調整してコントラスト比を確保
-      const dir = targetL > 0.5 ? 1 : -1;
+      const dir = targetL > 0.5 ? 1 : -1; // 明るい方向 or 暗い方向にさらに振る
       for (let step = 0.05; step <= 0.6; step += 0.05) {
         const newL = Math.min(0.95, Math.max(0.05, targetL + dir * step));
         fg = hslToRgb(fgHue, fgSat, newL);
@@ -718,9 +866,9 @@
   function swapToCombos() {
     for (const b of grid.children) {
       // 現在の高さを測って固定し、切り替え時にガクッと動かないようにする
-      const nameH = b.querySelector('.name').offsetHeight;
-      const jpH = b.querySelector('.jp').offsetHeight;
-      const enH = b.querySelector('.en').offsetHeight;
+      const nameH = b.querySelector('.name') ? b.querySelector('.name').offsetHeight : 40;
+      const jpH = b.querySelector('.jp') ? b.querySelector('.jp').offsetHeight : 40;
+      const enH = b.querySelector('.en') ? b.querySelector('.en').offsetHeight : 40;
       b.innerHTML = `
     <div class="name" style="height:${nameH}px;overflow:hidden">
       <p>${comboFill(40)}</p>
@@ -765,8 +913,10 @@
 
   /* ---- copy email ---- */
   const emailEl = document.getElementById('email');
+  const emailIconEl = document.getElementById('emailIcon');
+  const emailTextEl = document.getElementById('emailText');
   const copyBtnEl = document.getElementById('copyBtn');
-  const EMAIL_TEXT = emailEl.textContent;
+  const EMAIL_TEXT = 'matsuokaasuka@gmail.com';
   const THANKS_TEXT = 'ご連絡お待ちしています ⊹ ₊ ˚ *';
   const CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="miter" style="vertical-align: middle;"><path d="M20 6 9 17l-5-5"/></svg>';
   let thanksTimer = null;
@@ -774,20 +924,62 @@
   copyBtnEl.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(EMAIL_TEXT);
-      copyBtnEl.innerHTML = CHECK_SVG;
+      copyBtnEl.innerHTML = '<span class="jagged">' + CHECK_SVG + '</span>';
       copyBtnEl.classList.add('copied');
-      emailEl.textContent = THANKS_TEXT; // メール欄がメッセージに変わる
+      emailTextEl.textContent = THANKS_TEXT; // メール欄がメッセージに変わる
+      emailIconEl.textContent = '💌'; // ✉️→💌
       swapToCombos();                    // ブロックは明滅する飾り文字に
       clearTimeout(thanksTimer);
       thanksTimer = setTimeout(() => {
-        copyBtnEl.textContent = 'Copy';
+        copyBtnEl.innerHTML = '<span class="jagged">Copy</span>';
         copyBtnEl.classList.remove('copied');
-        emailEl.textContent = EMAIL_TEXT;
+        emailTextEl.textContent = EMAIL_TEXT;
         restoreBlocks();
       }, 3000);
     } catch (e) {
       window.prompt('コピーしてください:', EMAIL_TEXT);
     }
+  });
+
+  /* ---- Works ツリー開閉 ---- */
+  const worksToggle = document.getElementById('worksToggle');
+  const worksTree = document.getElementById('worksTree');
+  const worksIcon = worksToggle.querySelector('.works-icon');
+  worksToggle.addEventListener('click', () => {
+    const open = worksToggle.getAttribute('aria-expanded') === 'true';
+    worksToggle.setAttribute('aria-expanded', !open);
+    worksTree.hidden = open;
+    worksIcon.textContent = open ? '📁' : '📂';
+  });
+
+  /* ---- WORKS tree hover: ページ全体のテキストがその案件名に変わる ---- */
+  function fillWithProject(href, name) {
+    const link = '<a href="' + href + '">' + name + '</a>';
+    const sep = ' ';
+    const shortRep = Math.max(2, Math.ceil(30 / (name.length + 1)));
+    const midRep = Math.max(4, Math.ceil(80 / (name.length + 1)));
+    const longRep = Math.max(6, Math.ceil(140 / (name.length + 1)));
+    const short = Array(shortRep).fill(link).join(sep);
+    const mid = Array(midRep).fill(link).join(sep);
+    const long = Array(longRep).fill(link).join(sep);
+    for (const b of grid.children) {
+      b.innerHTML =
+        '<div class="name"><p>' + short + '</p><p>' + short + '</p></div>' +
+        '<p class="jp">' + mid + '</p>' +
+        '<p class="en">' + long + '</p>';
+    }
+  }
+
+  let projectHoverActive = false;
+  worksTree.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('mouseenter', function() {
+      projectHoverActive = true;
+      fillWithProject(link.getAttribute('href'), link.textContent);
+    });
+    link.addEventListener('mouseleave', function() {
+      projectHoverActive = false;
+      restoreBlocks();
+    });
   });
 </script>
 
