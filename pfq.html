@@ -106,7 +106,6 @@
 
   .copybar {
     display: flex;
-    flex-direction: column;
     margin-top: 7px;
     height: 32px;
     width: 260px;
@@ -116,7 +115,6 @@
   .copybar .email {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     background: #fff;
     border: none;
@@ -160,7 +158,6 @@
 
   .worksbar > button {
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 6px;
     background: #fff;
@@ -190,16 +187,18 @@
     display: none !important;
   }
 
-  .works-tree {
+    .works-tree {
     display: flex;
     flex-direction: column;
-        padding: 4px 10px 16px 20px;
-        
+    padding: 4px 10px 16px 20px;
+    gap: 0;
     overflow-y: visible;
     background: #fff;
+    border-radius: 0;
     margin-top: 0;
   }
-.works-tree a {
+
+  .works-tree a {
     color: #0000EE !important;
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -369,12 +368,9 @@
 
   /* ---- mobile ---- */
   @media (max-width: 720px) {
-    .works-tree {
-      max-height: 50vh;
-    }
     .works-tree a {
       font-size: 13px;
-      padding: 5px 0;
+      padding: 3px 0;
       line-height: 1.4;
       filter: none;
     }
