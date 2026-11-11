@@ -35,8 +35,7 @@
   }
 
   html {
-    overflow-y: scroll;
-    scrollbar-color: #bbb #ddd;
+    overflow-y: visible;
   }
 
   ::-webkit-scrollbar { width: 14px; height: 14px; background: #ddd; }
@@ -107,6 +106,7 @@
 
   .copybar {
     display: flex;
+    flex-direction: column;
     margin-top: 7px;
     height: 32px;
     width: 260px;
@@ -116,6 +116,7 @@
   .copybar .email {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     background: #fff;
     border: none;
@@ -159,6 +160,7 @@
 
   .worksbar > button {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 6px;
     background: #fff;
@@ -191,29 +193,23 @@
   .works-tree {
     display: flex;
     flex-direction: column;
-    padding: 4px 10px 16px 20px;
-    gap: 0;
-    max-height: 60vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #999 #fff;
+        padding: 4px 10px 16px 20px;
+        
+    overflow-y: visible;
     background: #fff;
     margin-top: 0;
   }
-
-  .works-tree::-webkit-scrollbar { width: 6px; }
-  .works-tree::-webkit-scrollbar-thumb { background: #999; }
-  .works-tree::-webkit-scrollbar-track { background: #fff; }
-
-  .works-tree a {
+.works-tree a {
     color: #0000EE !important;
-    text-decoration: underline !important;
-    padding: 5px 0;
-    line-height: 1.6;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 3px 0;
+    line-height: 1.5;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     filter: url(#distortion-light);
+    display: block;
   }
 
   .works-tree a::before {
@@ -252,7 +248,7 @@
     font-size: 36px;
     font-weight: 400;
     letter-spacing: 2px;
-    line-height: 1.4;
+    line-height: 1.6;
   }
 
   .work-title .year {
@@ -266,13 +262,14 @@
   .work-images {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+        gap: 8px;
   }
 
   .work-images img,
   .work-images video {
     width: 100%;
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
 
   /* レイアウトモジュール */
@@ -280,17 +277,20 @@
   .work-images .img-box-30 { width: 30%; margin: 0 auto; }
 
   .work-images .flex-container-2col {
-    display: flex; justify-content: space-between; gap: 8px;
+    display: flex;
+    flex-direction: column; justify-content: space-between; gap: 8px;
   }
   .work-images .flex-container-2col > * { width: 49%; }
 
   .work-images .flex-container-3col {
-    display: flex; justify-content: space-between; gap: 8px;
+    display: flex;
+    flex-direction: column; justify-content: space-between; gap: 8px;
   }
   .work-images .flex-container-3col > * { width: 32%; }
 
   .work-images .flex-container-4col {
-    display: flex; justify-content: space-between; gap: 8px;
+    display: flex;
+    flex-direction: column; justify-content: space-between; gap: 8px;
   }
   .work-images .flex-container-4col > * { width: 24%; }
 
@@ -349,6 +349,7 @@
     margin-top: 80px;
     padding: 30px 0;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     filter: url(#distortion-light);
@@ -364,6 +365,19 @@
 
   .work-footer a:hover {
     text-decoration: none;
+  }
+
+  /* ---- mobile ---- */
+  @media (max-width: 720px) {
+    .works-tree {
+      max-height: 50vh;
+    }
+    .works-tree a {
+      font-size: 13px;
+      padding: 5px 0;
+      line-height: 1.4;
+      filter: none;
+    }
   }
 </style>
 </head>
@@ -404,22 +418,18 @@
       <a href="hugtics.html">Hugtics</a>
       <a href="honyoubi.html">#木曜日は本曜日</a>
       <a href="fsb.html">FIRST SHAVE BOOK</a>
-      <a href="fanclove.html">Fanclove</a>
       <a href="isepan_2021.html">ISEPAN! 2021</a>
       <a href="astigu.html">ASTIGU</a>
       <a href="table.html">Table 2019 Autumn</a>
       <a href="harudane.html">銀座三越 春装飾</a>
       <a href="wacoal.html">Wacoal PARFAGE</a>
-      <a href="hm.html">ほっともっと HAPPY HOUR</a>
       <a href="yayoiken.html">やよい軒</a>
       <a href="irodorisai.html">三越伊勢丹 彩り祭</a>
       <a href="kose.html">KOSE Winter Massage</a>
       <a href="xmas_2020.html">三越伊勢丹クリスマス2020</a>
-      <a href="tcs.html">TOKYO CREATIVE SALON 2020</a>
       <a href="xmas_2019.html">三越伊勢丹クリスマス2019</a>
       <a href="isepan_2019.html">ISEPAN! 2019</a>
       <a href="pfq.html">QUADRA CI</a>
-      <a href="wwf.html">WWF #ANIMAL_SELFIE</a>
     </div>
   </div>
 </div>
